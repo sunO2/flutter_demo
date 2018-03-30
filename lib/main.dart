@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main()=> runApp(new MyApp());
 
@@ -40,12 +41,13 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState(title: title);
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   int _currentIndex = 0;
 
   String title;
 
   _MyHomePageState({this.title : 'flutter demo'});
+
 
   void _showMessageDialog(String message){
     showDialog(
@@ -58,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: new Text("OK"),
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.of(context).pushNamed(SECOND_PAGE);
+                _launchURL('https://www.baidu.com');
               },
             ),
             new FlatButton(
@@ -72,7 +74,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  _launchURL(url) {
+    if (canLaunch(url) != null) {
+       launch(url,
+           forceWebView:true,
+       forceSafariVC: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
+  @override
+  void dispose() {
+    print('回收');
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +162,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         new FlatButton(
                           child: new Text("CANCEL"),
                           onPressed: () {
-                            Navigator.of(context).pushNamed(SECOND_PAGE);
+                            Navigator.of(context).push(new PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context,_,__){
+                                return new MyHomePage(title: '第二个页面');
+                              },
+                              transitionsBuilder: (_,Animation<double> animation,__,Widget child){
+                                return new FadeTransition(
+                                  opacity: animation,
+                                  child: new SlideTransition(position: new Tween<Offset>(
+                                      begin: const Offset(0.0, 1.0),
+                                      end: Offset.zero,
+                                  ).animate(animation),child: child),
+                                );
+                              }
+                            ));
                           },
                         ),
                       ] ,
