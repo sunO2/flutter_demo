@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/animationDemo/home.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main()=> runApp(new MyApp());
@@ -13,12 +14,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
 
-      home: new MyHomePage(title: 'Flutter Demo '),
+      home: buildMyHomePage(),
       routes: <String,WidgetBuilder>{
-        SECOND_PAGE:(BuildContext context){return new MyHomePage(title: '第二个页面'); }//先声明要跳转的新页面,title是要传递的参数,'/second_page'是给这个页面取个名字，后面会用到
+        SECOND_PAGE:(BuildContext context){return new AnimationDemoHome(); }//先声明要跳转的新页面,title是要传递的参数,'/second_page'是给这个页面取个名字，后面会用到
       },
     );
   }
+
+  MyHomePage buildMyHomePage() => new MyHomePage(title: 'Flutter Demo ');
 }
 
 class MyHomePage extends StatefulWidget {
@@ -165,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                             Navigator.of(context).push(new PageRouteBuilder(
                               opaque: false,
                               pageBuilder: (BuildContext context,_,__){
-                                return new MyHomePage(title: '第二个页面');
+                                return new AnimationDemoHome();
                               },
                               transitionsBuilder: (_,Animation<double> animation,__,Widget child){
                                 return new FadeTransition(
