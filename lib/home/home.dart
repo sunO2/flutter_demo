@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/animationDemo/home.dart';
-import 'package:flutter_demo/home/MyHomePage.dart';
+import 'package:flutter_demo/home/homePage.dart';
 import 'package:flutter_demo/routes/Path.dart';
 
 class APP extends StatelessWidget{
