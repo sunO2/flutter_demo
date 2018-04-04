@@ -9,7 +9,7 @@ class StartPage extends  StatefulWidget{
 }
 
 class _StartPage extends APPState{
-  
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -20,19 +20,22 @@ class _StartPage extends APPState{
           color: Colors.white,
           onPressed: (){
             print('点击');
-            navigator(context: context, widgets: new AnimationDemoHome());
+            appNavigator(context: context, widgets: new AnimationDemoHome());
           },
         ),
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.message),
               onPressed: (){
-                navigator(context: context, widgets: new MainScreen());
+                appNavigator(context: context, widgets: new MainScreen());
               })
         ],
         title: new Text("首页")
       ),
+      body: new Column(
+
+      ),
     );
   }
-  
+
 }
