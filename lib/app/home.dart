@@ -25,13 +25,37 @@ class _APPHomeState extends State with TickerProviderStateMixin{
 
   int _currentIndex = 0;
 
+  TabController _tabController;
+
+  @override
+  void initState(){
+    super.initState();
+    print('initState ');
+
+    _tabController = new TabController(
+      initialIndex: _currentIndex,
+        length: 5,
+        vsync: this);
+    _tabController.addListener((){
+      setState((){
+        print('切换');
+        _currentIndex = _tabController.index;
+      });
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('切换之后');
     return new DefaultTabController(
       length: 5,
       initialIndex: _currentIndex,
       child: new Scaffold(
-        body: _BottomNavigationBarView[_currentIndex],
+        body: new TabBarView(
+          controller: _tabController,
+          children: _BottomNavigationBarView,
+        ),
         bottomNavigationBar: new BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           fixedColor:Theme.of(context).primaryColor,
@@ -39,7 +63,7 @@ class _APPHomeState extends State with TickerProviderStateMixin{
           items: _BottomNavigationBarItems,
           onTap: (int index){
             setState((){
-              _currentIndex = index;
+              _tabController.index= index;
             });
           },
         ),
