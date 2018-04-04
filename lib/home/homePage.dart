@@ -97,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
             title: new Text(title),
             bottom: new TabBar(
                 tabs: [
+                    new Tab(text: '动画页面'),
                     new Tab(text: '第一页面'),
                     new Tab(text: '第二页面'),
                     new Tab(text: '第三页面'),
@@ -105,10 +106,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
           ),
           body: new TabBarView(
               children: [
+                new AnimationDemoHome(),
                 new Icon(Icons.directions_car),
                 new Icon(Icons.directions_transit),
                 new Icon(Icons.directions_bike),
-              ]
+              ],
+            controller: new TabController(length: 3, vsync: this,initialIndex: _currentIndex),
           ),
           bottomNavigationBar: new BottomNavigationBar(
             currentIndex: _currentIndex,
