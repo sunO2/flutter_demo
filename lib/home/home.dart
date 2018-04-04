@@ -11,11 +11,14 @@ class APP extends StatelessWidget{
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: buildMyHomePage(),
-      theme: Theme.of(context).copyWith(primaryColor: new Color(0xFFFCA338)),
+      theme: Theme.of(context).copyWith(
+          primaryColor: new Color(0xFFFCA338),
+          platform:TargetPlatform.iOS,
+      ),
       routes: <String,WidgetBuilder>{
         RoutePath.ANIMATION_DEMO_PAGE:(BuildContext context){return new AnimationDemoHome(); }//先声明要跳转的新页面,title是要传递的参数,'/second_page'是给这个页面取个名字，后面会用到
       },
     );
   }
-  APPHome buildMyHomePage() => new APPHome();
+  Widget buildMyHomePage() => new APPHome();
 }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/animationDemo/home.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -59,13 +59,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   }
 
   _launchURL(url) {
-    if (canLaunch(url) != null) {
-       launch(url,
-           forceWebView:true,
-       forceSafariVC: true);
-    } else {
-      throw 'Could not launch $url';
-    }
+//    if (canLaunch(url) != null) {
+//       launch(url,
+//           forceWebView:true,
+//       forceSafariVC: false);
+//    } else {
+//      throw 'Could not launch $url';
+//    }
   }
 
   @override
