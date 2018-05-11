@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
+import 'package:flutter_demo/routes/Path.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/animationDemo/home.dart';
@@ -14,12 +16,16 @@ class StartPage extends  StatefulWidget{
 
 class _StartPage extends APPState{
 
-  List<Map<String,String>> data;
+  static List data;
 
   @override
   void initState() {
     super.initState();
-    getBanner();
+
+    if(null == data) {
+      print("数据是否为空  $data");
+      getBanner();
+    }
   }
 
   @override
@@ -33,13 +39,16 @@ class _StartPage extends APPState{
           color: Colors.white,
           onPressed: (){
             print('点击');
-            appNavigator(context: context, widgets: new AnimationDemoHome());
+//            appNavigator(context: context, widgets: new AnimationDemoHome());
+            Navigator.pushNamed(context, RoutePath.ANIMATION_DEMO_PAGE);
+
           },
         ),
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.message),
               onPressed: (){
+//                Navigator.pushNamed(context, RoutePath.ANIMATION_DEMO_PAGE);
                 appNavigator(context: context, widgets: new MainScreen());
               })
         ],
@@ -52,7 +61,7 @@ class _StartPage extends APPState{
       );
   }
 
-  List<Map<String,String>> getBanners(){
+  List getBanners(){
     if(null == data || data.isEmpty){
       return new List();
     }
@@ -60,7 +69,7 @@ class _StartPage extends APPState{
   }
 
 
-  List<Widget> getChild(List<Map<String,String>> images){
+  List<Widget> getChild(List images){
     if(null == images || images.isEmpty){
      return <Widget>[new Text('')];
     }
@@ -69,7 +78,6 @@ class _StartPage extends APPState{
       iamgeWidgets.add(new Image.network(
           image['img'],
         fit: BoxFit.fitWidth,
-          
       ));
     });
 
@@ -82,12 +90,11 @@ class _StartPage extends APPState{
 
     print(read);
 
-    var jsonDecoder = new JsonDecoder();
-    List<Map<String,String>> convert = jsonDecoder.convert(read);
-    print(convert);
+    var convert = json.decode(read);
+    print(convert[0].runtimeType);
 
     setState((){
-      this.data = convert;
+      _StartPage.data = convert;
     });
   }
 }

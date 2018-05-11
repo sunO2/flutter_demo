@@ -16,7 +16,7 @@ class APPHome extends StatefulWidget{
 class _APPHomeState extends State with TickerProviderStateMixin{
 
   List<Widget> _BottomNavigationBarView = <Widget>[
-    new StartPage(),
+    StartPage(),
     new JianBaoPage(),
     new SheQuPage(),
     new JianDingPage(),
