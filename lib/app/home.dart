@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/scheduler/ticker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -51,20 +54,26 @@ class _APPHomeState extends State with TickerProviderStateMixin{
     return new DefaultTabController(
       length: 5,
       initialIndex: _currentIndex,
-      child: new Scaffold(
-        body: new TabBarView(
-          controller: _tabController,
-          children: _BottomNavigationBarView,
-        ),
-        bottomNavigationBar: new BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          fixedColor:Theme.of(context).primaryColor,
-          currentIndex: _currentIndex,
-          items: _BottomNavigationBarItems,
-          onTap: (int index){
-            setState((){
-              _tabController.index= index;
-            });
+      child:new WillPopScope(
+        // Prevent swipe popping of this page. Use explicit exit buttons only.
+        onWillPop: () => new Future<bool>.value(true),
+        child: new CupertinoTabScaffold(
+          tabBar: new CupertinoTabBar(
+            items: _BottomNavigationBarItems,
+          ),
+          tabBuilder: (BuildContext context, int index) {
+            return new DefaultTextStyle(
+              style: const TextStyle(
+                fontFamily: '.SF UI Text',
+                fontSize: 17.0,
+                color: CupertinoColors.black,
+              ),
+              child: new CupertinoTabView(
+                builder: (BuildContext context) {
+                  return _BottomNavigationBarView[index];
+                },
+              ),
+            );
           },
         ),
       ),

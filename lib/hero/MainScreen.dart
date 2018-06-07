@@ -6,38 +6,57 @@ String URL = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&se
 class MainScreen extends APPStatelessWidget {
   @override
   Widget build(BuildContext context){
+
+    var hero = new Hero(
+        tag: 'imageHero',
+        child: new Image.network(
+          URL,
+        )
+    );
+
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Main Screen')
       ),
       body: new GestureDetector(
         onTap: (){
-          navigatorDefaule(context: context, widgets: new DetailScreen());
+          navigatorDefaule(context: context, widgets: new DetailScreen(hero: hero,));
         },
-        child: new Hero(
-          tag: 'imageHero',
-          child: new Image.network(
-            URL,
-          )
-        )
+        child: hero
       )
     );
   }
 }
 
 class DetailScreen extends APPStatelessWidget {
+
+  var url = URL;
+
+  Widget hero;
+
+  DetailScreen({
+    this.hero,
+    this.url
+  });
+
   @override
   Widget build(BuildContext context){
+
+//   var hero =  new Hero(
+//        tag: 'imageHero',
+//        child: new Card(
+//          child: new Image.network(url),
+//          elevation: 0.0,
+//        )
+//    );
+
     return new Scaffold(
       body: new GestureDetector(
         onTap: () {
           Navigator.pop(context);
         },
         child: new Center(
-          child: new Hero(
-            tag: 'imageHero',
-            child: new Image.network(URL)
-          )
+          child: hero
         )
       )
     );

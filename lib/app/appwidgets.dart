@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-abstract class APPState extends State{
+abstract class APPState<T extends StatefulWidget> extends State<T>{
 
   //页面跳转
   void appNavigator({
